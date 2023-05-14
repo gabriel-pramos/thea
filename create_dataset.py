@@ -212,6 +212,7 @@ def sgi_rackable_c2112_4g10() -> object:
     edge_server.model_name = "SGI"
 
     # Computational capacity (CPU in cores, RAM memory in megabytes, and disk in megabytes)
+    # https://www.spec.org/power_ssj2008/results/res2012q1/power_ssj2008-20120306-00437.html
     edge_server.cpu = 32
     edge_server.memory = 32768
     edge_server.disk = 1048576
@@ -219,8 +220,8 @@ def sgi_rackable_c2112_4g10() -> object:
 
     # Power-related attributes
     edge_server.power_model_parameters = {
-        "static_power_percentage": 265 / 1387,
-        "max_power_consumption": 1387,
+        "utilization": [0.994, 0.899, 0.800, 0.701, 0.599, 0.499, 0.400, 0.300, 0.200, 0.100, 0.0],
+        "power_consumption": [1387, 1316, 1239, 1158, 1060, 943, 825, 718, 624, 531, 265],
     }
 
     return edge_server
@@ -243,9 +244,10 @@ def proliant_dl360_gen9() -> object:
     edge_server.mips = 3000
 
     # Power-related attributes
+    # https://www.spec.org/power_ssj2008/results/res2023q1/power_ssj2008-20221204-01201.html
     edge_server.power_model_parameters = {
-        "static_power_percentage": 45 / 276,
-        "max_power_consumption": 276,
+        "utilization": [0.996, 0.900, 0.799, 0.701, 0.599, 0.500, 0.400, 0.300, 0.200, 0.100, 0.0],
+        "power_consumption": [616, 582, 535, 491, 452, 419, 388, 358, 327, 294, 179],
     }
 
     return edge_server
@@ -268,9 +270,10 @@ def ar585_f1() -> object:
     edge_server.mips = 3500
 
     # Power-related attributes
+    # https://www.spec.org/power_ssj2008/results/res2012q1/power_ssj2008-20120213-00420.html
     edge_server.power_model_parameters = {
-        "static_power_percentage": 127 / 559,
-        "max_power_consumption": 559,
+        "utilization": [0.997, 0.898, 0.801, 0.700, 0.600, 0.498, 0.399, 0.300, 0.198, 0.100, 0.0],
+        "power_consumption": [559, 530, 497, 463, 428, 386, 339, 293, 254, 220, 127],
     }
 
     return edge_server
@@ -332,7 +335,7 @@ for provider_spec in provider_specs:
             edge_server.max_concurrent_layer_downloads = 3
 
             # Specifying the edge server's power model
-            edge_server.power_model = LinearServerPowerModel
+            edge_server.power_model = PolynomialServerPowerModel
 
             # Edge server's infrastructure provider
             edge_server.infrastructure_provider = provider_spec["id"]

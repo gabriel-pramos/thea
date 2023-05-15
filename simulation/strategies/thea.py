@@ -6,6 +6,7 @@ from edge_sim_py.components.service import Service
 # Importing helper methods
 from simulation.helper_methods import *
 
+import numpy as np
 
 def thea(parameters: dict = {}):
     """Heuristic algorithm that provisions composite applications on federated edge infrastructures taking into account the delay
@@ -158,9 +159,13 @@ def get_host_candidates(user: object, service: object) -> list:
         sla_violations = violates_delay_sla + violates_privacy_sla
 
         # Gathering the edge server's power consumption cost based on its CPU usage
-        static_power_consumption = edge_server.power_model_parameters["static_power_percentage"]
-        consumption_per_core = edge_server.power_model_parameters["max_power_consumption"] / edge_server.cpu
-        power_consumption = consumption_per_core + static_power_consumption * (1 - sign(edge_server.cpu_demand))
+        #static_power_consumption = edge_server.power_model_parameters["static_power_percentage"]
+        #consumption_per_core = edge_server.power_model_parameters["max_power_consumption"] / edge_server.cpu
+        #power_consumption = consumption_per_core + static_power_consumption * (1 - sign(edge_server.cpu_demand))
+        utilization = np.array(edge_server.power_model_parameters["utilization"])
+        power = np.array(edge_server.power_model_parameters["power_consumption"])
+        fit_func = np.poly1d(np.polyfit(utilization, power, 7))
+        power_consumption = fit_func(edge_server.cpu_demand / edge_server.cpu)
 
         # Gathering the list of non-provisioned services that could possibly rely on the edge server regarding its trust degree
         affected_services = []

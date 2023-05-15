@@ -1,5 +1,7 @@
 # EdgeSimPy components
 from edge_sim_py import *
+from simulation.polynomial_server_power_model import PolynomialServerPowerModel
+from simulation.helper_methods import *
 
 # Python libraries
 from sklearn.cluster import KMeans

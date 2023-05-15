@@ -281,7 +281,7 @@ def evaluate_placement() -> tuple:
     overloaded_edge_servers = metrics["overloaded_edge_servers"]
 
     # Gathering the overall edge server power consumption
-    max_power_consumption_possible = sum([server.power_model_parameters["max_power_consumption"] for server in EdgeServer.all()])
+    max_power_consumption_possible = sum([max(server.power_model_parameters["power_consumption"]) for server in EdgeServer.all()])
     overall_power_consumption = metrics["overall_power_consumption"] / max_power_consumption_possible * 100
 
     # Gathering the number of SLA violations (delay and privacy)

@@ -246,10 +246,10 @@ def proliant_dl360_gen9() -> object:
     edge_server.mips = 3000
 
     # Power-related attributes
-    # https://www.spec.org/power_ssj2008/results/res2023q1/power_ssj2008-20221204-01201.html
+    # https://www.spec.org/power_ssj2008/results/res2016q1/power_ssj2008-20151215-00708.html
     edge_server.power_model_parameters = {
-        "utilization": [0.996, 0.900, 0.799, 0.701, 0.599, 0.500, 0.400, 0.300, 0.200, 0.100, 0.0],
-        "power_consumption": [616, 582, 535, 491, 452, 419, 388, 358, 327, 294, 179],
+        "utilization": [1.000, 0.902, 0.799, 0.700, 0.600, 0.500, 0.401, 0.301, 0.199, 0.100, 0.000],
+        "power_consumption": [276, 248, 218, 188, 162, 145, 133, 118, 101, 83.7, 45.0],
     }
 
     return edge_server
